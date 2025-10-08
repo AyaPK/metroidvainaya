@@ -4,7 +4,7 @@ func init() -> void:
 	pass
 
 func enter() -> void:
-	pass
+	player.velocity.x = 0
 
 func exit() -> void:
 	pass
