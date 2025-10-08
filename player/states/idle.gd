@@ -10,10 +10,12 @@ func exit() -> void:
 	pass
 
 func handle_input(_event: InputEvent) -> PlayerState:
-	return next_state
+	return null
 
 func process(_delta: float) -> PlayerState:
-	return next_state
+	return null
 
 func physics_process(_delta: float) -> PlayerState:
-	return next_state
+	if player.direction.x != 0:
+		return run
+	return null
