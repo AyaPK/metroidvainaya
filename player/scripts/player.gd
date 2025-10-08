@@ -10,7 +10,9 @@ var previous_state: PlayerState :
 
 #region /// standard vars
 var direction: Vector2 = Vector2.ZERO
-var gravity: float = 980
+@export var gravity: float = 980
+@export var base_move_speed: int = 100
+@export var rotation_speed: float = 10.0
 #endregion
 
 func _ready() -> void:
@@ -26,11 +28,19 @@ func _process(_delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	velocity.y += gravity * _delta
 	move_and_slide()
+	_update_rotation(_delta)
 	change_state(current_state.physics_process(_delta))
 
 func _update_direction() -> void:
 	#var prev_direction: Vector2 = direction
 	direction = Input.get_vector("left", "right", "up", "down")
+
+func _update_rotation(_delta: float) -> void:
+	if is_on_floor():
+		var target_rotation = get_floor_normal().angle() + PI / 2
+		rotation = lerp_angle(rotation, target_rotation, rotation_speed * _delta)
+	else:
+		rotation = lerp_angle(rotation, 0.0, rotation_speed * _delta)
 
 func initialise_states() -> void:
 	states = []
