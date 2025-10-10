@@ -11,7 +11,7 @@ var previous_state: PlayerState :
 #region /// standard vars
 var direction: Vector2 = Vector2.ZERO
 @export var gravity: float = 980
-@export var base_move_speed: int = 100
+@export var base_move_speed: int = 150
 @export var rotation_speed: float = 10.0
 #endregion
 
@@ -33,7 +33,9 @@ func _physics_process(_delta: float) -> void:
 
 func _update_direction() -> void:
 	#var prev_direction: Vector2 = direction
-	direction = Input.get_vector("left", "right", "up", "down")
+	var x_axis: float = Input.get_axis("left", "right")
+	var y_axis: float = Input.get_axis("up", "down")
+	direction = Vector2(x_axis, y_axis)
 
 func _update_rotation(_delta: float) -> void:
 	if is_on_floor():
@@ -57,6 +59,8 @@ func initialise_states() -> void:
 	
 	change_state(current_state)
 	current_state.enter()
+	$Label.text = current_state.name
+
 
 func change_state(new_state: PlayerState) -> void:
 	if !new_state:
@@ -69,3 +73,4 @@ func change_state(new_state: PlayerState) -> void:
 	states.push_front(new_state)
 	current_state.enter()
 	states.resize(3)
+	$Label.text = current_state.name

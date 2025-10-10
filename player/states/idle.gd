@@ -4,7 +4,7 @@ func init() -> void:
 	pass
 
 func enter() -> void:
-	player.velocity.x = 0
+	pass
 
 func exit() -> void:
 	pass
@@ -18,4 +18,5 @@ func process(_delta: float) -> PlayerState:
 func physics_process(_delta: float) -> PlayerState:
 	if player.direction.x != 0:
 		return run
+	player.velocity.x = 0
 	return null

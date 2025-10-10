@@ -24,7 +24,18 @@ shape = SubResource("RectangleShape2D_oul6g")
 [node name="States" type="Node" parent="."]
 
 [node name="Idle" type="Node" parent="States"]
+unique_name_in_owner = true
 script = ExtResource("2_rkbax")
 
 [node name="Run" type="Node" parent="States"]
+unique_name_in_owner = true
 script = ExtResource("3_g1dw6")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -57.0
+offset_top = -67.0
+offset_right = 59.0
+offset_bottom = -53.0
+theme_override_font_sizes/font_size = 10
+text = "label"
+horizontal_alignment = 1
