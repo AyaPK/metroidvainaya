@@ -1,10 +1,10 @@
-class_name PlayerStateIdle extends PlayerState
+class_name PlayerStateFall extends PlayerState
 
 func init() -> void:
 	pass
 
 func enter() -> void:
-	player.velocity.x = 0
+	pass
 
 func exit() -> void:
 	pass
@@ -16,10 +16,13 @@ func process(_delta: float) -> PlayerState:
 	return null
 
 func physics_process(_delta: float) -> PlayerState:
-	if Input.is_action_just_pressed("jump"):
-		return jump
-	if player.direction.x != 0:
-		return run
-	if !player.is_on_floor():
-		return fall
+	player.velocity.y += player.gravity * _delta
+	
+	if player.is_on_floor():
+		if player.direction.x == 0:
+			return idle
+		else:
+			return run
+	
+	player.velocity.x = player.direction.x * player.base_move_speed
 	return null
