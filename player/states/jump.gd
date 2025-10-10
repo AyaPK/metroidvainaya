@@ -7,7 +7,7 @@ func enter() -> void:
 	player.velocity.y = -player.jump_force
 
 func exit() -> void:
-	pass
+	player.coyote_timer = 0.0
 
 func handle_input(_event: InputEvent) -> PlayerState:
 	return null

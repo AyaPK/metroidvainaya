@@ -10,9 +10,11 @@ var previous_state: PlayerState :
 
 #region /// standard vars
 var direction: Vector2 = Vector2.ZERO
+var coyote_timer: float = 0.0
 @export var gravity: float = 980
 @export var base_move_speed: int = 150
 @export var jump_force: float = 400.0
+@export var coyote_time: float = 0.1
 @export var rotation_speed: float = 10.0
 #endregion
 
