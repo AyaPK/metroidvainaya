@@ -12,6 +12,7 @@ func enter() -> void:
 
 func exit() -> void:
 	player.gravity_multiplier = 1.0
+	player.set_collision_mask_value(5, true)
 	if player.is_on_floor():
 		player.coyote_timer = player.coyote_time
 

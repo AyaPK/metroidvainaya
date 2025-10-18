@@ -2,6 +2,10 @@ class_name Player extends CharacterBody2D
 
 const DEBUG_JUMP_INDICATOR = preload("uid://belnbdxrh2xmt")
 
+#region /// onready
+@onready var floor_checker: RayCast2D = $FloorChecker
+#endregion
+
 #region /// State Machine vars
 var states: Array[PlayerState]
 var current_state: PlayerState :
@@ -94,3 +98,10 @@ func add_debug_indicator(color: Color = Color.RED) -> void:
 	indicator.modulate = color
 	await get_tree().create_timer(2).timeout
 	indicator.queue_free()
+
+func is_on_one_way_platform() -> bool:
+	if floor_checker.is_colliding():
+		var body = floor_checker.get_collider()
+		if body in get_tree().get_nodes_in_group("platform"):
+			return true
+	return false
