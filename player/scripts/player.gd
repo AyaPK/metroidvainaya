@@ -13,10 +13,16 @@ var previous_state: PlayerState :
 #region /// standard vars
 var direction: Vector2 = Vector2.ZERO
 var coyote_timer: float = 0.0
+var buffer_timer: float = 0.0
+#endregion
+
+#region /// Export vars
 @export var gravity: float = 980
+@export var gravity_multiplier: float = 1
 @export var base_move_speed: int = 150
 @export var jump_force: float = 400.0
-@export var coyote_time: float = 0.1
+@export var coyote_time: float = 0.125
+@export var jump_buffer: float = 0.2
 @export var rotation_speed: float = 10.0
 #endregion
 
@@ -31,6 +37,8 @@ func _process(_delta: float) -> void:
 	change_state(current_state.process(_delta))
 
 func _physics_process(_delta: float) -> void:
+	velocity.y += gravity * (_delta * gravity_multiplier)
+
 	change_state(current_state.physics_process(_delta))
 	move_and_slide()
 	_update_rotation(_delta)

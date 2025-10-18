@@ -19,9 +19,7 @@ func handle_input(event: InputEvent) -> PlayerState:
 func process(_delta: float) -> PlayerState:
 	return null
 
-func physics_process(_delta: float) -> PlayerState:
-	player.velocity.y += player.gravity * _delta
-	
+func physics_process(_delta: float) -> PlayerState:	
 	if player.velocity.y > 0:
 		return fall
 	
