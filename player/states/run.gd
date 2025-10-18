@@ -13,10 +13,6 @@ func handle_input(_event: InputEvent) -> PlayerState:
 	return null
 
 func process(_delta: float) -> PlayerState:
-	if player.velocity.x < 0:
-		player.sprite.flip_h = true
-	else:
-		player.sprite.flip_h = false
 	if Input.is_action_just_pressed("jump"):
 		return jump
 	elif Input.is_action_just_pressed("down"):

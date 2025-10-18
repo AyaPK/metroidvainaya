@@ -54,6 +54,11 @@ func _update_direction() -> void:
 	var x_axis: float = Input.get_axis("left", "right")
 	var y_axis: float = Input.get_axis("up", "down")
 	direction = Vector2(x_axis, y_axis)
+	
+	if velocity.x < 0:
+		sprite.flip_h = true
+	elif velocity.x > 1:
+		sprite.flip_h = false
 
 func _update_rotation(_delta: float) -> void:
 	if is_on_floor():
