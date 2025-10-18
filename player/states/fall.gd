@@ -12,6 +12,7 @@ func enter() -> void:
 
 func exit() -> void:
 	player.gravity_multiplier = 1.0
+	player.set_collision_mask_value(5, true)
 	if player.is_on_floor():
 		player.coyote_timer = player.coyote_time
 
@@ -33,6 +34,8 @@ func physics_process(delta: float) -> PlayerState:
 	if player.is_on_floor():
 		if player.buffer_timer > 0:
 			return jump
+		if Input.is_action_pressed("down"):
+			return crouch
 		if player.direction.x == 0:
 			return idle
 		else:
