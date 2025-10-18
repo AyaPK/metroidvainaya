@@ -6,6 +6,7 @@ func init() -> void:
 	pass
 
 func enter() -> void:
+	player.update_animation_state("fall")
 	player.gravity_multiplier = fall_gravity_multiplier
 	player.add_debug_indicator()
 	pass

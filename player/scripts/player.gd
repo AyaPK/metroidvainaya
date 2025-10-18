@@ -4,6 +4,8 @@ const DEBUG_JUMP_INDICATOR = preload("uid://belnbdxrh2xmt")
 
 #region /// onready
 @onready var floor_checker: RayCast2D = $FloorChecker
+@onready var player_animation_tree: AnimationTree = $PlayerAnimationTree
+@onready var sprite: Sprite2D = $Sprite
 #endregion
 
 #region /// State Machine vars
@@ -23,8 +25,8 @@ var buffer_timer: float = 0.0
 #region /// Export vars
 @export var gravity: float = 980
 @export var gravity_multiplier: float = 1
-@export var base_move_speed: int = 150
-@export var jump_force: float = 400.0
+@export var base_move_speed: int = 100
+@export var jump_force: float = 300.0
 @export var coyote_time: float = 0.125
 @export var jump_buffer: float = 0.2
 @export var rotation_speed: float = 10.0
@@ -105,3 +107,11 @@ func is_on_one_way_platform() -> bool:
 		if body in get_tree().get_nodes_in_group("platform"):
 			return true
 	return false
+
+func update_animation_state(state: String) -> void:
+	var animation_states: Array = ["idle", "run", "crouch", "jump", "fall"]
+	for s in animation_states:
+		player_animation_tree["parameters/conditions/"+s] = false
+	
+	if state in animation_states:
+		player_animation_tree["parameters/conditions/"+state] = true

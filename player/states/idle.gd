@@ -5,6 +5,7 @@ func init() -> void:
 
 func enter() -> void:
 	player.velocity.x = 0
+	player.update_animation_state("idle")
 
 func exit() -> void:
 	pass

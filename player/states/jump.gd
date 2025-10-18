@@ -4,6 +4,7 @@ func init() -> void:
 	pass
 
 func enter() -> void:
+	player.update_animation_state("jump")
 	player.add_debug_indicator(Color.GREEN)
 	player.velocity.y = -player.jump_force
 
