@@ -4,12 +4,16 @@ func init() -> void:
 	pass
 
 func enter() -> void:
+	player.add_debug_indicator(Color.GREEN)
 	player.velocity.y = -player.jump_force
 
 func exit() -> void:
 	player.coyote_timer = 0.0
 
-func handle_input(_event: InputEvent) -> PlayerState:
+func handle_input(event: InputEvent) -> PlayerState:
+	if event.is_action_released("jump"):
+		player.velocity.y *= 0.5
+		return fall
 	return null
 
 func process(_delta: float) -> PlayerState:

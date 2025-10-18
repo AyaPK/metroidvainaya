@@ -1,5 +1,7 @@
 class_name Player extends CharacterBody2D
 
+const DEBUG_JUMP_INDICATOR = preload("uid://belnbdxrh2xmt")
+
 #region /// State Machine vars
 var states: Array[PlayerState]
 var current_state: PlayerState :
@@ -76,3 +78,11 @@ func change_state(new_state: PlayerState) -> void:
 	current_state.enter()
 	states.resize(3)
 	$Label.text = current_state.name
+
+func add_debug_indicator(color: Color = Color.RED) -> void:
+	var indicator: Node2D = DEBUG_JUMP_INDICATOR.instantiate()
+	get_tree().root.add_child(indicator)
+	indicator.global_position = global_position
+	indicator.modulate = color
+	await get_tree().create_timer(2).timeout
+	indicator.queue_free()

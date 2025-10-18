@@ -4,6 +4,7 @@ func init() -> void:
 	pass
 
 func enter() -> void:
+	player.add_debug_indicator()
 	pass
 
 func exit() -> void:
