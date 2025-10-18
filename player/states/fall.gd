@@ -33,6 +33,8 @@ func physics_process(delta: float) -> PlayerState:
 	if player.is_on_floor():
 		if player.buffer_timer > 0:
 			return jump
+		if Input.is_action_pressed("down"):
+			return crouch
 		if player.direction.x == 0:
 			return idle
 		else:
