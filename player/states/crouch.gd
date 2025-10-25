@@ -4,7 +4,7 @@ func init() -> void:
 	pass
 
 func enter() -> void:
-	player.update_animation_state("crouch")
+	player.update_animation("crouch")
 
 func exit() -> void:
 	pass

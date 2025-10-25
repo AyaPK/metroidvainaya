@@ -4,7 +4,7 @@ const DEBUG_JUMP_INDICATOR = preload("uid://belnbdxrh2xmt")
 
 #region /// onready
 @onready var floor_checker: RayCast2D = $FloorChecker
-@onready var player_animation_tree: AnimationTree = $PlayerAnimationTree
+@onready var player_animation: AnimationPlayer = $PlayerAnimation
 @onready var sprite: Sprite2D = $Sprite
 #endregion
 
@@ -30,6 +30,7 @@ var buffer_timer: float = 0.0
 @export var coyote_time: float = 0.125
 @export var jump_buffer: float = 0.2
 @export var rotation_speed: float = 10.0
+@export var max_fall_velocity: float = 600
 #endregion
 
 func _ready() -> void:
@@ -44,7 +45,7 @@ func _process(_delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	velocity.y += gravity * (_delta * gravity_multiplier)
-
+	velocity.y = clampf(velocity.y, -1000, max_fall_velocity)
 	change_state(current_state.physics_process(_delta))
 	move_and_slide()
 	_update_rotation(_delta)
@@ -114,10 +115,5 @@ func is_on_one_way_platform() -> bool:
 			return true
 	return false
 
-func update_animation_state(state: String) -> void:
-	var animation_states: Array = ["idle", "run", "crouch", "jump", "fall"]
-	for s in animation_states:
-		player_animation_tree["parameters/conditions/"+s] = false
-	
-	if state in animation_states:
-		player_animation_tree["parameters/conditions/"+state] = true
+func update_animation(animation_name: String) -> void:
+	player_animation.play(animation_name)

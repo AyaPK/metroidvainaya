@@ -6,7 +6,8 @@ func init() -> void:
 	pass
 
 func enter() -> void:
-	player.update_animation_state("fall")
+	player.update_animation("jump")
+	player.player_animation.pause()
 	player.gravity_multiplier = fall_gravity_multiplier
 	player.add_debug_indicator()
 	pass
@@ -23,6 +24,7 @@ func handle_input(event: InputEvent) -> PlayerState:
 	return null
 
 func process(_delta: float) -> PlayerState:
+	set_jump_frame()
 	return null
 
 func physics_process(delta: float) -> PlayerState:
@@ -44,3 +46,7 @@ func physics_process(delta: float) -> PlayerState:
 	
 	player.velocity.x = player.direction.x * player.base_move_speed
 	return null
+	
+func set_jump_frame() -> void:
+	var frame: float = remap(player.velocity.y, 0.0, player.max_fall_velocity, 0.8, 1.2)
+	player.player_animation.seek(frame, true)
