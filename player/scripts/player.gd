@@ -1,6 +1,7 @@
 class_name Player extends CharacterBody2D
 
 const DEBUG_JUMP_INDICATOR = preload("uid://belnbdxrh2xmt")
+const SHADOW = preload("uid://b6g6fjcetnt3s")
 
 #region /// onready
 @onready var floor_checker: RayCast2D = $FloorChecker
@@ -20,6 +21,7 @@ var previous_state: PlayerState :
 var direction: Vector2 = Vector2.ZERO
 var coyote_timer: float = 0.0
 var buffer_timer: float = 0.0
+var can_airdash: bool = true
 #endregion
 
 #region /// Export vars
@@ -31,6 +33,7 @@ var buffer_timer: float = 0.0
 @export var jump_buffer: float = 0.2
 @export var rotation_speed: float = 10.0
 @export var max_fall_velocity: float = 600
+@export var airdash_time: float = 0.1
 #endregion
 
 func _ready() -> void:
@@ -117,3 +120,11 @@ func is_on_one_way_platform() -> bool:
 
 func update_animation(animation_name: String) -> void:
 	player_animation.play(animation_name)
+
+func spawn_shadow() -> void:
+	var shadow: Shadow = SHADOW.instantiate()
+	get_parent().add_child(shadow)
+	shadow.global_position = global_position
+	shadow.sprite.flip_h = sprite.flip_h
+	shadow.sprite.frame = sprite.frame
+	

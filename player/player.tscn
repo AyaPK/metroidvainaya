@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bkmau1c3h2to0"]
+[gd_scene load_steps=17 format=3 uid="uid://bkmau1c3h2to0"]
 
 [ext_resource type="Script" uid="uid://bt32gu1bd8mxk" path="res://player/scripts/player.gd" id="1_oul6g"]
 [ext_resource type="Texture2D" uid="uid://daief803eimsx" path="res://assets/player/spritesheet.png" id="2_boad6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://jrtep83720lt" path="res://player/states/jump.gd" id="4_qjkh3"]
 [ext_resource type="Script" uid="uid://4xwosjn8bk8c" path="res://player/states/fall.gd" id="5_g6k8r"]
 [ext_resource type="Script" uid="uid://brl1afehrt02" path="res://player/states/crouch.gd" id="6_g6k8r"]
+[ext_resource type="Script" uid="uid://c1m6fcbl2vkoc" path="res://player/states/airdash.gd" id="8_rgyib"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_boad6"]
 radius = 6.0
@@ -123,6 +124,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_oul6g")
@@ -159,6 +161,10 @@ script = ExtResource("5_g6k8r")
 unique_name_in_owner = true
 script = ExtResource("6_g6k8r")
 
+[node name="Airdash" type="Node" parent="States"]
+unique_name_in_owner = true
+script = ExtResource("8_rgyib")
+
 [node name="Label" type="Label" parent="."]
 visible = false
 offset_left = -57.0
@@ -189,4 +195,9 @@ root_node = NodePath("")
 advance_expression_base_node = NodePath("")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+zoom = Vector2(1.25, 1.25)
+
+[node name="AirdashTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+autostart = true

@@ -21,6 +21,8 @@ func exit() -> void:
 func handle_input(event: InputEvent) -> PlayerState:
 	if event.is_action_pressed("jump"):
 		player.buffer_timer = player.jump_buffer
+	elif Input.is_action_just_pressed("Airdash") and player.can_airdash:
+		return airdash
 	return null
 
 func process(_delta: float) -> PlayerState:
@@ -35,6 +37,7 @@ func physics_process(delta: float) -> PlayerState:
 		return jump
 	
 	if player.is_on_floor():
+		player.can_airdash = true
 		if player.buffer_timer > 0:
 			return jump
 		if Input.is_action_pressed("down"):

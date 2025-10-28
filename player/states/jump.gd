@@ -13,6 +13,8 @@ func exit() -> void:
 	player.coyote_timer = 0.0
 
 func handle_input(event: InputEvent) -> PlayerState:
+	if Input.is_action_just_pressed("Airdash")  and player.can_airdash:
+		return airdash
 	if event.is_action_released("jump"):
 		player.velocity.y *= 0.5
 		return fall

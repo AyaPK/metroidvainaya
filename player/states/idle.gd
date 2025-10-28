@@ -6,6 +6,7 @@ func init() -> void:
 func enter() -> void:
 	player.velocity.x = 0
 	player.update_animation("idle")
+	player.can_airdash = true
 
 func exit() -> void:
 	pass
