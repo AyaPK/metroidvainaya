@@ -20,7 +20,7 @@ func process(_delta: float) -> PlayerState:
 func physics_process(_delta: float) -> PlayerState:
 	if Input.is_action_just_pressed("jump"):
 		return jump
-	elif Input.is_action_just_pressed("down"):
+	elif player.is_crouch_intent():
 		return crouch
 	if player.direction.x != 0:
 		return run

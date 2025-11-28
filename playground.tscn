@@ -20,6 +20,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_wt17y")
 
 [node name="Node2D" type="Node2D"]
+position = Vector2(1, 0)
 
 [node name="Sprite2D7" type="Sprite2D" parent="."]
 position = Vector2(334.9395, 140)
@@ -132,7 +133,7 @@ texture = SubResource("GradientTexture2D_m8u5f")
 shape = SubResource("RectangleShape2D_is3ju")
 
 [node name="Player" parent="." instance=ExtResource("1_rupst")]
-position = Vector2(328, 214)
+position = Vector2(46, 162)
 
 [node name="Sprite2D11" type="Sprite2D" parent="."]
 position = Vector2(550, -14.999992)

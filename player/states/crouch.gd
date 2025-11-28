@@ -13,10 +13,11 @@ func handle_input(_event: InputEvent) -> PlayerState:
 	return next_state
 
 func process(_delta: float) -> PlayerState:
-	if !Input.is_action_pressed("down"):
+	if !player.is_crouch_intent():
 		return idle
 	elif Input.is_action_just_pressed("jump"):
 		if player.is_on_one_way_platform():
+			print("ene")
 			player.global_position.y += 1
 		else:
 			return jump

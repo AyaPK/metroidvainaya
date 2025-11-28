@@ -40,7 +40,7 @@ func physics_process(delta: float) -> PlayerState:
 		player.can_airdash = true
 		if player.buffer_timer > 0:
 			return jump
-		if Input.is_action_pressed("down"):
+		if player.is_crouch_intent():
 			return crouch
 		if player.direction.x == 0:
 			return idle

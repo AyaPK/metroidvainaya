@@ -28,12 +28,16 @@ var can_airdash: bool = true
 @export var gravity: float = 980
 @export var gravity_multiplier: float = 1
 @export var base_move_speed: int = 100
-@export var jump_force: float = 300.0
+@export var jump_force: float = 340.0
 @export var coyote_time: float = 0.125
 @export var jump_buffer: float = 0.2
 @export var rotation_speed: float = 10.0
 @export var max_fall_velocity: float = 600
 @export var airdash_time: float = 0.1
+@export var inner_deadzone: float = 0.18
+@export var outer_deadzone: float = 0.98
+@export var crouch_mag_min: float = 0.22
+@export var crouch_half_angle_deg: float = 40.0
 #endregion
 
 func _ready() -> void:
@@ -55,9 +59,8 @@ func _physics_process(_delta: float) -> void:
 
 func _update_direction() -> void:
 	var prev_direction: Vector2 = direction
-	var x_axis: float = Input.get_axis("left", "right")
-	var y_axis: float = Input.get_axis("up", "down")
-	direction = Vector2(x_axis, y_axis)
+	var raw := Input.get_vector("left", "right", "up", "down")
+	direction = _apply_radial_deadzone(raw, inner_deadzone, outer_deadzone)
 	
 	if prev_direction.x != direction.x:
 		if direction.x < 0:
@@ -103,6 +106,26 @@ func change_state(new_state: PlayerState) -> void:
 	states.resize(3)
 	$Label.text = current_state.name
 
+func _apply_radial_deadzone(v: Vector2, inner: float, outer: float) -> Vector2:
+	var m := v.length()
+	if m < inner:
+		return Vector2.ZERO
+	var t = clamp((m - inner) / max(outer - inner, 0.0001), 0.0, 1.0)
+	return v.normalized() * t
+
+func _is_in_sector(angle: float, center: float, half_width: float) -> bool:
+	var d = abs(wrapf(angle - center, -PI, PI))
+	return d <= half_width
+
+func is_crouch_intent() -> bool:
+	if direction == Vector2.ZERO:
+		return false
+	var mag := direction.length()
+	if mag < crouch_mag_min:
+		return false
+	var angle := atan2(direction.y, direction.x)
+	return _is_in_sector(angle, PI/2, deg_to_rad(crouch_half_angle_deg))
+
 func add_debug_indicator(color: Color = Color.RED) -> void:
 	var indicator: Node2D = DEBUG_JUMP_INDICATOR.instantiate()
 	get_tree().root.add_child(indicator)
@@ -113,9 +136,7 @@ func add_debug_indicator(color: Color = Color.RED) -> void:
 
 func is_on_one_way_platform() -> bool:
 	if floor_checker.is_colliding():
-		var body = floor_checker.get_collider()
-		if body in get_tree().get_nodes_in_group("platform"):
-			return true
+		return true
 	return false
 
 func update_animation(animation_name: String) -> void:

@@ -15,7 +15,7 @@ func handle_input(_event: InputEvent) -> PlayerState:
 func process(_delta: float) -> PlayerState:
 	if Input.is_action_just_pressed("jump"):
 		return jump
-	elif Input.is_action_just_pressed("down"):
+	elif player.is_crouch_intent():
 		return crouch
 	return null
 
