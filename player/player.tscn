@@ -196,7 +196,6 @@ root_node = NodePath("")
 advance_expression_base_node = NodePath("")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.25, 1.25)
 
 [node name="AirdashTimer" type="Timer" parent="."]
 wait_time = 0.3
